@@ -1,7 +1,7 @@
 # Учебный проект «Угадай мелодию» [![Build status][travis-image]][travis-url]
 
 * Студент: [Роман Кушнир](https://up.htmlacademy.ru/react/3/user/485545).
-* Наставник: `Неизвестно`.
+* Наставник: [Олег Запорожец](https://htmlacademy.ru/profile/id261007).
 
 ---
 
