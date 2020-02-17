@@ -20,11 +20,13 @@ const question = {
   }],
 };
 
+const handleAnswer = () => {};
+
 it(`GenreQuestionScreen is rendered correctly`, () => {
   const tree = renderer.create((
     <GenreQuestionScreen
       question={question}
-      onAnswer={() => {}}
+      onAnswer={handleAnswer}
     />
   ), {
     createNodeMock: () => {

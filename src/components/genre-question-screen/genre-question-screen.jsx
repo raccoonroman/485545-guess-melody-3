@@ -5,13 +5,30 @@ import {GameType} from "../../const.js";
 class GenreQuestionScreen extends PureComponent {
   constructor(props) {
     super(props);
+    this.handleFormSubmit = this.handleFormSubmit.bind(this);
     this.state = {
       answers: [false, false, false, false],
     };
   }
 
-  render() {
+  handleFormSubmit(evt) {
+    evt.preventDefault();
     const {onAnswer, question} = this.props;
+    onAnswer(question, this.state.answers);
+  }
+
+  handleInputChange(i) {
+    return (evt) => {
+      const value = evt.target.checked;
+      const {answers: userAnswers} = this.state;
+      this.setState({
+        answers: [...userAnswers.slice(0, i), value, ...userAnswers.slice(i + 1)],
+      });
+    };
+  }
+
+  render() {
+    const {question} = this.props;
     const {answers: userAnswers} = this.state;
     const {
       answers,
@@ -42,10 +59,7 @@ class GenreQuestionScreen extends PureComponent {
           <h2 className="game__title">Выберите {genre} треки</h2>
           <form
             className="game__tracks"
-            onSubmit={(evt) => {
-              evt.preventDefault();
-              onAnswer(question, this.state.answers);
-            }}
+            onSubmit={this.handleFormSubmit}
           >
             {answers.map((answer, i) => (
               <div key={`${i}-${answer.src}`} className="track">
@@ -59,13 +73,7 @@ class GenreQuestionScreen extends PureComponent {
                   <input className="game__input visually-hidden" type="checkbox" name="answer" value={`answer-${i}`}
                     id={`answer-${i}`}
                     checked={userAnswers[i]}
-                    onChange={(evt) => {
-                      const value = evt.target.checked;
-
-                      this.setState({
-                        answers: [...userAnswers.slice(0, i), value, ...userAnswers.slice(i + 1)],
-                      });
-                    }}
+                    onChange={this.handleInputChange(i)}
                   />
                   <label className="game__check" htmlFor={`answer-${i}`}>Отметить</label>
                 </div>

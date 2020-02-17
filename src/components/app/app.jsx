@@ -10,9 +10,24 @@ import {GameType} from "../../const.js";
 class App extends PureComponent {
   constructor(props) {
     super(props);
-    this.state = {
-      step: -1,
-    };
+    this.handleWelcomeButtonClick = this.handleWelcomeButtonClick.bind(this);
+    this.onAnswer = this.onAnswer.bind(this);
+    this.onAnswerStub = this.onAnswerStub.bind(this);
+    this.state = {step: -1};
+  }
+
+  handleWelcomeButtonClick() {
+    this.setState({step: 0});
+  }
+
+  onAnswer() {
+    this.setState((prevState) => ({
+      step: prevState.step + 1,
+    }));
+  }
+
+  onAnswerStub() {
+    return;
   }
 
   _renderGameScreen() {
@@ -24,11 +39,7 @@ class App extends PureComponent {
       return (
         <WelcomeScreen
           errorsCount={errorsCount}
-          onWelcomeButtonClick={() => {
-            this.setState({
-              step: 0,
-            });
-          }}
+          onWelcomeButtonClick={this.handleWelcomeButtonClick}
         />
       );
     }
@@ -39,22 +50,14 @@ class App extends PureComponent {
           return (
             <ArtistQuestionScreen
               question={question}
-              onAnswer={() => {
-                this.setState((prevState) => ({
-                  step: prevState.step + 1,
-                }));
-              }}
+              onAnswer={this.onAnswer}
             />
           );
         case GameType.GENRE:
           return (
             <GenreQuestionScreen
               question={question}
-              onAnswer={() => {
-                this.setState((prevState) => ({
-                  step: prevState.step + 1,
-                }));
-              }}
+              onAnswer={this.onAnswer}
             />
           );
       }
@@ -75,13 +78,13 @@ class App extends PureComponent {
           <Route exact path="/artist">
             <ArtistQuestionScreen
               question={questions[1]}
-              onAnswer={() => {}}
+              onAnswer={this.onAnswerStub}
             />
           </Route>
           <Route exact path="/genre">
             <GenreQuestionScreen
               question={questions[0]}
-              onAnswer={() => {}}
+              onAnswer={this.onAnswerStub}
             />
           </Route>
         </Switch>
