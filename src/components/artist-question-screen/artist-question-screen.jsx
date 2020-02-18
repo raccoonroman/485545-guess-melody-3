@@ -48,17 +48,20 @@ const ArtistQuestionScreen = (props) => {
         </div>
 
         <form className="game__artist">
-          {answers.map((answer, i) => (
-            <div key={answer.artist} className="artist">
-              <input className="artist__input visually-hidden" type="radio" name="answer" value={`answer-${i}`} id={`answer-${i}`}
-                onChange={handleInputChange(answer)}
-              />
-              <label className="artist__name" htmlFor={`answer-${i}`}>
-                <img className="artist__picture" src={answer.picture} alt={answer.artist} />
-                {answer.artist}
-              </label>
-            </div>
-          ))}
+          {answers.map((answer, i) => {
+            const {picture, artist} = answer;
+            return (
+              <div key={artist} className="artist">
+                <input className="artist__input visually-hidden" type="radio" name="answer" value={`answer-${i}`} id={`answer-${i}`}
+                  onChange={handleInputChange(answer)}
+                />
+                <label className="artist__name" htmlFor={`answer-${i}`}>
+                  <img className="artist__picture" src={picture} alt={artist} />
+                  {artist}
+                </label>
+              </div>
+            );
+          })}
         </form>
       </section>
     </section>

@@ -7,29 +7,27 @@ class GenreQuestionScreen extends PureComponent {
     super(props);
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
     this.state = {
-      answers: [false, false, false, false],
+      userAnswers: [false, false, false, false],
     };
   }
 
   handleFormSubmit(evt) {
     evt.preventDefault();
     const {onAnswer, question} = this.props;
-    onAnswer(question, this.state.answers);
+    onAnswer(question, this.state.userAnswers);
   }
 
   handleInputChange(i) {
-    return (evt) => {
-      const value = evt.target.checked;
-      const {answers: userAnswers} = this.state;
-      this.setState({
-        answers: [...userAnswers.slice(0, i), value, ...userAnswers.slice(i + 1)],
-      });
+    return ({target: {checked: value}}) => {
+      const userAnswers = [...this.state.userAnswers];
+      userAnswers[i] = value;
+      this.setState({userAnswers});
     };
   }
 
   render() {
     const {question} = this.props;
-    const {answers: userAnswers} = this.state;
+    const {userAnswers} = this.state;
     const {
       answers,
       genre,
@@ -61,12 +59,12 @@ class GenreQuestionScreen extends PureComponent {
             className="game__tracks"
             onSubmit={this.handleFormSubmit}
           >
-            {answers.map((answer, i) => (
-              <div key={`${i}-${answer.src}`} className="track">
+            {answers.map(({src}, i) => (
+              <div key={`${i}-${src}`} className="track">
                 <button className="track__button track__button--play" type="button"/>
                 <div className="track__status">
                   <audio
-                    src={answer.src}
+                    src={src}
                   />
                 </div>
                 <div className="game__answer">
