@@ -1,6 +1,5 @@
 const AVATAR_URL = `https://api.adorable.io/avatars/128`;
 
-
 export default [
   {
     type: `genre`,
@@ -18,8 +17,7 @@ export default [
       src: `https://upload.wikimedia.org/wikipedia/commons/4/4e/BWV_543-fugue.ogg`,
       genre: `rock`,
     }],
-  },
-  {
+  }, {
     type: `artist`,
     song: {
       artist: `Jim Beam`,
@@ -35,5 +33,5 @@ export default [
       picture: `${AVATAR_URL}/${Math.random()}`,
       artist: `Jim Beam`,
     }],
-  }
+  },
 ];

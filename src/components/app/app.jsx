@@ -1,6 +1,7 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import {Switch, Route, BrowserRouter} from "react-router-dom";
+import GameScreen from "../game-screen/game-screen.jsx";
 import WelcomeScreen from "../welcome-screen/welcome-screen.jsx";
 import ArtistQuestionScreen from "../artist-question-screen/artist-question-screen.jsx";
 import GenreQuestionScreen from "../genre-question-screen/genre-question-screen.jsx";
@@ -10,24 +11,27 @@ import {GameType} from "../../const.js";
 class App extends PureComponent {
   constructor(props) {
     super(props);
-    this.handleWelcomeButtonClick = this.handleWelcomeButtonClick.bind(this);
-    this.handleUserAnswer = this.handleUserAnswer.bind(this);
-    this.handleUserAnswerOnExactPath = this.handleUserAnswerOnExactPath.bind(this);
-    this.state = {step: -1};
+    this._handleWelcomeButtonClick = this._handleWelcomeButtonClick.bind(this);
+    this._handleUserAnswer = this._handleUserAnswer.bind(this);
+    this._handleUserAnswerOnExactPath = this._handleUserAnswerOnExactPath.bind(this);
+    this.state = {
+      step: -1,
+    };
   }
 
-  handleWelcomeButtonClick() {
+  _handleWelcomeButtonClick() {
     this.setState({step: 0});
   }
 
-  handleUserAnswer() {
+  _handleUserAnswer() {
     this.setState((prevState) => ({
       step: prevState.step + 1,
     }));
   }
 
-  handleUserAnswerOnExactPath() {
+  _handleUserAnswerOnExactPath() {
   }
+
 
   _renderGameScreen() {
     const {errorsCount, questions} = this.props;
@@ -38,7 +42,7 @@ class App extends PureComponent {
       return (
         <WelcomeScreen
           errorsCount={errorsCount}
-          onWelcomeButtonClick={this.handleWelcomeButtonClick}
+          onWelcomeButtonClick={this._handleWelcomeButtonClick}
         />
       );
     }
@@ -47,17 +51,25 @@ class App extends PureComponent {
       switch (question.type) {
         case GameType.ARTIST:
           return (
-            <ArtistQuestionScreen
-              question={question}
-              onAnswer={this.handleUserAnswer}
-            />
+            <GameScreen
+              type={question.type}
+            >
+              <ArtistQuestionScreen
+                question={question}
+                onAnswer={this._handleUserAnswer}
+              />
+            </GameScreen>
           );
         case GameType.GENRE:
           return (
-            <GenreQuestionScreen
-              question={question}
-              onAnswer={this.handleUserAnswer}
-            />
+            <GameScreen
+              type={question.type}
+            >
+              <GenreQuestionScreen
+                question={question}
+                onAnswer={this._handleUserAnswer}
+              />
+            </GameScreen>
           );
       }
     }
@@ -77,13 +89,13 @@ class App extends PureComponent {
           <Route exact path="/artist">
             <ArtistQuestionScreen
               question={questions[1]}
-              onAnswer={this.handleUserAnswerOnExactPath}
+              onAnswer={this._handleUserAnswerOnExactPath}
             />
           </Route>
           <Route exact path="/genre">
             <GenreQuestionScreen
               question={questions[0]}
-              onAnswer={this.handleUserAnswerOnExactPath}
+              onAnswer={this._handleUserAnswerOnExactPath}
             />
           </Route>
         </Switch>
