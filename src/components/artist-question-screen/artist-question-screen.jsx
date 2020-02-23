@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import withAudioPlayer from "../../hocs/with-audio-player/with-audio-player.js";
 import {GameType} from "../../const.js";
 
 
@@ -59,4 +60,4 @@ ArtistQuestionScreen.propTypes = {
 };
 
 
-export default ArtistQuestionScreen;
+export default withAudioPlayer(ArtistQuestionScreen);
