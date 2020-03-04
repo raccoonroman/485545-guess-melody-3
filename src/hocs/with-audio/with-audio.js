@@ -1,6 +1,7 @@
 import React, {createRef, PureComponent} from "react";
 import PropTypes from "prop-types";
 
+
 const withAudio = (Component) => {
   class WithAudio extends PureComponent {
     constructor(props) {
@@ -25,11 +26,9 @@ const withAudio = (Component) => {
         isLoading: false,
       });
 
-      audio.onplay = () => {
-        this.setState({
-          isPlaying: true,
-        });
-      };
+      audio.onplay = () => this.setState({
+        isPlaying: true,
+      });
 
       audio.onpause = () => this.setState({
         isPlaying: false,
