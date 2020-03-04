@@ -25,11 +25,9 @@ const withAudio = (Component) => {
         isLoading: false,
       });
 
-      audio.onplay = () => {
-        this.setState({
-          isPlaying: true,
-        });
-      };
+      audio.onplay = () => this.setState({
+        isPlaying: true,
+      });
 
       audio.onpause = () => this.setState({
         isPlaying: false,
