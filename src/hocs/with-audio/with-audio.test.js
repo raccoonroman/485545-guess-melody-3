@@ -3,7 +3,6 @@ import renderer from "react-test-renderer";
 import PropTypes from "prop-types";
 import withAudio from "./with-audio.js";
 
-
 const MockComponent = (props) => {
   const {children} = props;
 
