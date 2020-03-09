@@ -6,7 +6,11 @@ import Mistakes from "../mistakes/mistakes.jsx";
 
 
 const GameScreen = (props) => {
-  const {type, children, mistakes} = props;
+  const {
+    type,
+    children,
+    mistakes,
+  } = props;
 
   return (
     <section className={`game game--${type}`}>
@@ -21,7 +25,9 @@ const GameScreen = (props) => {
             style={{filter: `url(#blur)`, transform: `rotate(-90deg) scaleY(-1)`, transformOrigin: `center`}}/>
         </svg>
 
-        <Mistakes count={mistakes} />
+        <Mistakes
+          count={mistakes}
+        />
       </header>
 
       {children}

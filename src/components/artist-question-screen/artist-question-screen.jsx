@@ -1,17 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
-import withAudioPlayer from "../../hocs/with-audio-player/with-audio-player.js";
 import {GameType} from "../../const.js";
 
 
 const ArtistQuestionScreen = (props) => {
   const {onAnswer, question, renderPlayer} = props;
-  const {answers, song} = question;
-
-  const handleInputChange = (answer) => (evt) => {
-    evt.preventDefault();
-    onAnswer(question, answer);
-  };
+  const {
+    answers,
+    song,
+  } = question;
 
   return (
     <section className="game__screen">
@@ -23,20 +20,20 @@ const ArtistQuestionScreen = (props) => {
       </div>
 
       <form className="game__artist">
-        {answers.map((answer, i) => {
-          const {artist, picture} = answer;
-          return (
-            <div key={artist} className="artist">
-              <input className="artist__input visually-hidden" type="radio" name="answer" value={`answer-${i}`} id={`answer-${i}`}
-                onChange={handleInputChange(answer)}
-              />
-              <label className="artist__name" htmlFor={`answer-${i}`}>
-                <img className="artist__picture" src={picture} alt={artist} />
-                {artist}
-              </label>
-            </div>
-          );
-        })}
+        {answers.map((answer, i) => (
+          <div key={answer.artist} className="artist">
+            <input className="artist__input visually-hidden" type="radio" name="answer" value={`answer-${i}`} id={`answer-${i}`}
+              onChange={(evt) => {
+                evt.preventDefault();
+                onAnswer(question, answer);
+              }}
+            />
+            <label className="artist__name" htmlFor={`answer-${i}`}>
+              <img className="artist__picture" src={answer.picture} alt={answer.artist} />
+              {answer.artist}
+            </label>
+          </div>
+        ))}
       </form>
     </section>
   );
@@ -60,4 +57,4 @@ ArtistQuestionScreen.propTypes = {
 };
 
 
-export default withAudioPlayer(ArtistQuestionScreen);
+export default ArtistQuestionScreen;

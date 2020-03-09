@@ -2,7 +2,6 @@ import {extend} from "./utils.js";
 import {GameType} from "./const.js";
 import questions from "./mocks/questions.js";
 
-
 const initialState = {
   mistakes: 0,
   maxMistakes: 3,
@@ -13,6 +12,7 @@ const initialState = {
 const ActionType = {
   INCREMENT_MISTAKES: `INCREMENT_MISTAKES`,
   INCREMENT_STEP: `INCREMENT_STEP`,
+  RESET: `RESET`,
 };
 
 const isArtistAnswerCorrect = (question, userAnswer) => {
@@ -48,30 +48,30 @@ const ActionCreator = {
       payload: answerIsCorrect ? 0 : 1,
     };
   },
+
+  resetGame: () => {
+    return {
+      type: ActionType.RESET,
+      payload: null,
+    };
+  },
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case ActionType.INCREMENT_STEP:
-      let nextStep = state.step + action.payload;
-
-      if (nextStep >= state.questions.length) {
-        return extend({}, initialState);
-      }
-
       return extend(state, {
-        step: nextStep,
+        step: state.step + action.payload,
       });
 
     case ActionType.INCREMENT_MISTAKES:
-      const mistakes = state.mistakes + action.payload;
-
-      if (mistakes >= state.maxMistakes) {
-        return extend({}, initialState);
-      }
-
       return extend(state, {
         mistakes: state.mistakes + action.payload,
+      });
+
+    case ActionType.RESET:
+      return extend(initialState, {
+        step: 0,
       });
   }
 
