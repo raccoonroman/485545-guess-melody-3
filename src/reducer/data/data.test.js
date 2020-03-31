@@ -1,7 +1,6 @@
 import MockAdapter from "axios-mock-adapter";
-import {createAPI} from "../../api.js";
-import {reducer, ActionType, Operation} from "./data.js";
-
+import {createAPI} from "../../api";
+import {reducer, ActionType, Operation} from "./data";
 
 const api = createAPI(() => {});
 
@@ -58,7 +57,6 @@ it(`Reducer should update questions by load questions`, () => {
     questions,
   });
 });
-
 
 describe(`Operation work correctly`, () => {
   it(`Should make a correct API call to /questions`, function () {
